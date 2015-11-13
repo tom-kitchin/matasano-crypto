@@ -24,7 +24,7 @@ class String
   end
 
   def hamming_distance_to(other_string)
-    bytes.as_bytes_xor_with(other_string.bytes).bit_count
+    bytes.hamming_distance_to(other_string.bytes)
   end
 end
 
@@ -43,6 +43,10 @@ class Array
 
   def as_bytes_xor_with(other_bytes)
     zip(other_bytes).map { |(a, b)| a ^ b }
+  end
+
+  def hamming_distance_to(other_bytes)
+    as_bytes_xor_with(other_bytes).bit_count
   end
 
   def bit_count

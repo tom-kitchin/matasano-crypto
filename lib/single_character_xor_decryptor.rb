@@ -6,9 +6,9 @@ class SingleCharacterXorDecryptor
 
   ORDS_SET = (0...123)
 
-  def initialize(input, input_type)
+  def initialize(input, input_format)
     @input = input
-    case input_type
+    case input_format
     when :hex
       @input_bytes = @input.as_hex_to_bytes
     when :bytes
