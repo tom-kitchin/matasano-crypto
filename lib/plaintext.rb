@@ -1,21 +1,18 @@
 require 'enumerator'
 
 class Plaintext
-  ENGLISH_LETTER_FREQUENCY_SCORE_LOOKUP = Hash[[*('zqxjkvbpygfwmucldrhsnioate'.split(//)).map.with_index]]
+  attr_reader :text, :key
 
-  def initialize(text)
-    @text = text#.encode(
-    #   Encoding.find('US-ASCII'),
-    #   {
-    #     invalid: :replace,
-    #     undef: :replace,
-    #     replace: ''
-    #   }
-    # )
+  # Note that spaces are given a medium value.
+  ENGLISH_LETTER_FREQUENCY_SCORE_LOOKUP = Hash[[*('zqxjkvbpygfw mucldrhsnioate'.split(//)).map.with_index]]
+
+  def initialize(text, key = nil)
+    @text = text
+    @key = key
   end
 
   def to_s
-    @text.gsub(/[^0-9A-Za-z]/, '_')
+    @text
   end
 
   def score
@@ -33,16 +30,20 @@ end
 class PlaintextCollection
   include Enumerable
 
-  def initialize
-    @collection = []
+  def initialize(collection = nil)
+    if collection
+      collection.map { |item| push(item) }
+    else
+      @collection = []
+    end
   end
 
   def best
     @collection.max { |a, b| a.score <=> b.score }
   end
 
-  def push(plaintext)
-    plaintext = Plaintext.new(plaintext) if plaintext.is_a? String
+  def push(plaintext, key = nil)
+    plaintext = Plaintext.new(plaintext, key) if plaintext.is_a? String
     unless plaintext.is_a?(Plaintext)
       fail ArgumentError, 'Not a Plaintext object'
     end

@@ -1,27 +1,43 @@
-require 'hex_string'
-
-module CryptoUtils
-  module_function
-
-  def hex_to_base64(hex)
-    bin_array_to_base64(hex.to_byte_string)
+class String
+  def to_base64
+    [self].pack('m0')
   end
 
-  def hex_xor(hex1, hex2)
-    bin1 = hex_string_to_int(hex1)
-    bin2 = hex_string_to_int(hex2)
-    int_to_hex_string(bin1 ^ bin2)
+  def from_base64
+    unpack('m0').first
   end
 
-  def bin_array_to_base64(hex)
-    [hex].pack('m0')
+  def as_hex_to_bytes
+    gsub(/\s+/, '').scan(/../).map { |pair| pair.to_i(16) }
   end
 
-  def int_to_hex_string(int)
-    int.to_s(16)
+  def as_hex_to_base64
+    as_hex_to_bytes.as_bytes_to_base64
   end
 
-  def hex_string_to_int(hex)
-    hex.to_i(16)
+  def xor_with(other_string)
+    bytes.as_bytes_xor_with(other_string.bytes).unbytes
+  end
+
+  def as_hex_xor_with(other_hex)
+    as_hex_to_bytes.as_bytes_xor_with(other_hex.as_hex_to_bytes).as_bytes_to_hex
+  end
+end
+
+class Array
+  def unbytes
+    pack('c*')
+  end
+
+  def as_bytes_to_hex
+    map { |i| i.to_s(16) }.join
+  end
+
+  def as_bytes_to_base64
+    unbytes.to_base64
+  end
+
+  def as_bytes_xor_with(other_bytes)
+    zip(other_bytes).map { |(a, b)| a ^ b }
   end
 end
