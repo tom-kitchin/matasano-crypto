@@ -22,6 +22,9 @@ class String
   def as_hex_xor_with(other_hex)
     as_hex_to_bytes.as_bytes_xor_with(other_hex.as_hex_to_bytes).as_bytes_to_hex
   end
+
+  def hamming_distance_to(other_string)
+  end
 end
 
 class Array
@@ -30,7 +33,7 @@ class Array
   end
 
   def as_bytes_to_hex
-    map { |i| i.to_s(16) }.join
+    map { |i| i.to_s(16).rjust(2, '0') }.join
   end
 
   def as_bytes_to_base64
@@ -39,5 +42,15 @@ class Array
 
   def as_bytes_xor_with(other_bytes)
     zip(other_bytes).map { |(a, b)| a ^ b }
+  end
+
+  def bit_count
+    inject(0) { |acc, val| acc + val.bit_count }
+  end
+end
+
+class Integer
+  def bit_count
+    to_s(2).count('1')
   end
 end

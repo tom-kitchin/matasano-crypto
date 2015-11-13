@@ -1,7 +1,7 @@
 require 'plaintext'
 require 'crypto_utils'
 
-class SingleCharacterXor
+class SingleCharacterXorDecryptor
   attr_reader :plaintext, :input, :input_bytes
 
   ORDS_SET = (0...123)

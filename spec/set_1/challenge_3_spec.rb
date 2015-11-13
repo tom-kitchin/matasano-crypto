@@ -1,4 +1,4 @@
-require 'single_character_xor'
+require 'single_character_xor_decryptor'
 require 'crypto_utils'
 require 'pp'
 
@@ -46,7 +46,7 @@ RSpec.describe :Challenge3 do
   # end
 
   it 'creates the list of plaintext and finds the best match' do
-    scx = SingleCharacterXor.new(source, :hex)
+    scx = SingleCharacterXorDecryptor.new(source, :hex)
     expect(scx.best.text).to eq("Cooking MC's like a pound of bacon")
   end
 end

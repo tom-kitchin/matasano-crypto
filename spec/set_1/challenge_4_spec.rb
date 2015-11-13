@@ -1,4 +1,4 @@
-require 'single_character_xor'
+require 'single_character_xor_decryptor'
 require 'plaintext'
 
 RSpec.describe :Challenge4 do
@@ -8,7 +8,7 @@ RSpec.describe :Challenge4 do
     ptc = PlaintextCollection.new
     File.foreach(input_file) do |line|
       line = line.chomp
-      scx = SingleCharacterXor.new(line, :hex)
+      scx = SingleCharacterXorDecryptor.new(line, :hex)
       ptc.push scx.best
     end
     expect(ptc.best.key).to eq('7b5a4215415d544115415d5015455447414c155c46155f4058455c5b523f')

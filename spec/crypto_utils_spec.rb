@@ -24,6 +24,12 @@ RSpec.describe :string_extensions do
     base64 = 'SGVsbG8sIHdvcmxk'
     expect(string.as_hex_to_base64).to eq(base64)
   end
+
+  it 'computes the Hamming distance between it and another string' do
+    string1 = 'this is a test'
+    string2 = 'wokka wokka!!!'
+    expect(string1.hamming_distance_to(string2)).to eq(37)
+  end
 end
 
 RSpec.describe :array_extensions do
