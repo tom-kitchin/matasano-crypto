@@ -24,6 +24,7 @@ class String
   end
 
   def hamming_distance_to(other_string)
+    bytes.as_bytes_xor_with(other_string.bytes).bit_count
   end
 end
 
