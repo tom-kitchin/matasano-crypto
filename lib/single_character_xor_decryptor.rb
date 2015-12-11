@@ -12,9 +12,9 @@ class SingleCharacterXorDecryptor
     when :hex
       @input_bytes = @input.as_hex_to_bytes
     when :bytes
-      @input_bytes = @input.bytes
-    when :string
       @input_bytes = @input
+    when :string
+      @input_bytes = @input.bytes
     end
     run
   end
@@ -24,7 +24,7 @@ class SingleCharacterXorDecryptor
     ORDS_SET.each do |ord|
       code = Array.new(@input_bytes.length, ord)
       output_bytes = @input_bytes.as_bytes_xor_with(code)
-      @plaintext.push(output_bytes.unbytes, @input)
+      @plaintext.push(output_bytes.unbytes, ord, @input)
     end
   end
 

@@ -11,7 +11,7 @@ RSpec.describe :Challenge4 do
       scx = SingleCharacterXorDecryptor.new(line, :hex)
       ptc.push scx.best
     end
-    expect(ptc.best.key).to eq('7b5a4215415d544115415d5015455447414c155c46155f4058455c5b523f')
+    expect(ptc.best.source).to eq('7b5a4215415d544115415d5015455447414c155c46155f4058455c5b523f')
     expect(ptc.best.text).to eq("Now that the party is jumping\n")
   end
 end

@@ -9,15 +9,27 @@ class RepeatingKeyXor
   end
 
   def encrypt(plaintext)
-    cypher_bytes = []
+    cipher_bytes = []
     plaintext_bytes = plaintext.chomp.bytes
     plaintext_bytes.each_slice(@key_bytes.length) do |slice|
       if slice.length < @key_bytes.length
-        cypher_bytes.concat(slice.as_bytes_xor_with(@key_bytes.slice(0, slice.length)))
+        cipher_bytes.concat(slice.as_bytes_xor_with(@key_bytes.slice(0, slice.length)))
       else
-        cypher_bytes.concat(slice.as_bytes_xor_with(@key_bytes))
+        cipher_bytes.concat(slice.as_bytes_xor_with(@key_bytes))
       end
     end
-    cypher_bytes.as_bytes_to_hex
+    cipher_bytes.as_bytes_to_hex
+  end
+
+  def decrypt_bytes(cipher_bytes)
+    plaintext_bytes = []
+    cipher_bytes.each_slice(@key_bytes.length) do |slice|
+      if slice.length < @key_bytes.length
+        plaintext_bytes.concat(slice.as_bytes_xor_with(@key_bytes.slice(0, slice.length)))
+      else
+        plaintext_bytes.concat(slice.as_bytes_xor_with(@key_bytes))
+      end
+    end
+    plaintext_bytes.unbytes
   end
 end

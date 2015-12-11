@@ -4,8 +4,8 @@ require 'pp'
 
 RSpec.describe Plaintext do
   it 'generates a plaintext score based on character commonality' do
-    pt = Plaintext.new('zqxj')
-    expect(pt.score_by_english_letter_frequency).to eq(6)
+    pt = Plaintext.new('abc')
+    expect(pt.score_by_english_letter_frequency).to eq(0.0993325)
   end
 end
 
